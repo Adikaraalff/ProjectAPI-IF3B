@@ -16,3 +16,4 @@ Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
 Route::post('/fakultas', [FakultasController::class, 'store']);
 Route::post('/prodi', [ProdiController::class, 'store']);
 Route::post('/mahasiswa', [MahasiswaController::class, 'store']);
+Route::patch('/fakultas/{fakultas}', [FakultasController::class, 'update']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class MahasiswaController extends Controller
 {
@@ -32,7 +33,7 @@ class MahasiswaController extends Controller
     public function store(Request $request)
     {
         $validate = $request -> validate([
-            'npm' => 'required|unique:npm',
+            'npm' => 'required|unique:mahasiswas,npm',
             'nama' => 'required',
             'tanggal_lahir' => 'required',
             'tempat_lahir' => 'required',
@@ -44,7 +45,7 @@ class MahasiswaController extends Controller
 
         if($result){
             $data['succes'] = true;
-            $data['message'] = "Data Prodi berhasil disimpan";
+            $data['message'] = "Data Mahasiswa berhasil disimpan";
             $data['result'] = $result;
             return response()->json($data, Response::HTTP_CREATED);
         }

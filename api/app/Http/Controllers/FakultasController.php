@@ -32,13 +32,13 @@ class FakultasController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = $request -> validate([
+        $validate = $request->validate([
             'nama' => 'required|unique:fakultas'
 
         ]);
         $result = Fakultas::create($validate);
 
-        if($result){
+        if ($result) {
             $data['succes'] = true;
             $data['message'] = "Data Fakultas berhasil disimpan";
             $data['result'] = $result;
@@ -65,16 +65,36 @@ class FakultasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Fakultas $fakultas)
+    public function update(Request $request,Fakultas $id)
     {
+        $validate = $request->validate([
+            'nama' => 'required'
+        ]);
 
+        $result = Fakultas::where('id', $id)->update($validate);
+        if ($result) {
+            $data['succes'] = true;
+            $data['message'] = 'Data fakultas berhasil di update';
+            $data['result'] = $result;
+            return response()->json($data, Response::HTTP_OK);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Fakultas $fakultas)
+    public function destroy(Fakultas $id)
     {
-        //
+        $fakultas = Fakultas::find($id);
+        if ($fakultas) {
+            $fakultas->delete();
+            $data['succes'] = true;
+            $data['message'] = "Data Fakultas berhasil di hapus";
+            return response()->json($data, Response::HTTP_OK);
+        } else {
+            $data['succes'] = false;
+            $data['message'] = "Data Fakultas Tidak ditemukan";
+            return response()->json($data, Response::HTTP_OK);
+        }
     }
 }

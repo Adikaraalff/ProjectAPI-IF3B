@@ -66,16 +66,37 @@ class ProdiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Prodi $prodi)
+    public function update(Request $request, Prodi $id)
     {
-        //
+        $validate = $request->validate([
+            'nama' => 'required',
+            "fakultas-id" => 'required'
+        ]);
+
+        $result = Prodi::where('id', $id)->update($validate);
+        if ($result) {
+            $data['succes'] = true;
+            $data['message'] = 'Data Prodi berhasil di update';
+            $data['result'] = $result;
+            return response()->json($data, Response::HTTP_OK);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Prodi $prodi)
+    public function destroy(Prodi $id)
     {
-        //
+        $prodi = Prodi::find($id);
+        if ($prodi) {
+            $prodi->delete();
+            $data['succes'] = true;
+            $data['message'] = "Data Prodi berhasil di hapus";
+            return response()->json($data, Response::HTTP_OK);
+        } else {
+            $data['succes'] = false;
+            $data['message'] = "Data Prodi Tidak ditemukan";
+            return response()->json($data, Response::HTTP_OK);
+        }
     }
 }

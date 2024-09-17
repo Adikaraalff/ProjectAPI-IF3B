@@ -12,14 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mahasiswas', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->integer('npm', 10);
+            $table->uuid('id');
+            $table->primary('id');
+            $table->integer('npm');
             $table->string('nama', 50);
             $table->date('tanggal_lahir');
             $table->string('tempat_lahir', 25);
             $table->string('alamat', 25);
             $table->uuid('prodi_id');
-            $table->foreign('prodi_id')->references('id')->on('prodi');
+            $table->foreign('prodi_id')->references('id')->on('prodis');
             $table->timestamps();
         });
     }
